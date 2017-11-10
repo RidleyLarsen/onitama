@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <title>Onitama</title>
+  </head>
+  <body>
+    <canvas width="800" height="800" id="gameCanvas"/>
+    <script src="createjs.js"></script>
+    <script src="draw.js"></script>
+    <script src="game.js"></script>
+    <script src="board.js"></script>
+    <script src="pieces.js"></script>
+    <script src="cards.js"></script>
+    <script src="game.js"></script>
+    <script>
+      (function() {
+        setTimeout(function () {
+          setup_pieces();
+        }, 1000);
+      })()
+    </script>
+  </body>
+</html>
