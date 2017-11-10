@@ -46,7 +46,7 @@ function add_piece_shapes() {
           160
       );
       pieces["red"][i].shape.getChildByName("shape").x = 160 * pieces["red"][i].x
-      pieces["red"][i].shape.getChildByName("shape").y = 160 * pieces["red"][i].y
+      pieces["red"][i].shape.getChildByName("shape").y = (200) + (160 * pieces["red"][i].y)
   }
   for (var i = 0; i < pieces["blue"].length; i++) {
     var sprite = loader.getResult(pieces["blue"][i].sprite);
@@ -65,8 +65,8 @@ function add_piece_shapes() {
           160,
           160
       );
-      pieces["blue"][i].shape.getChildByName("shape").x = 160 * pieces["blue"][i].x
-      pieces["blue"][i].shape.getChildByName("shape").y = 160 * pieces["blue"][i].y
+      pieces["blue"][i].shape.getChildByName("shape").x = 160 * pieces["blue"][i].x;
+      pieces["blue"][i].shape.getChildByName("shape").y = (200) + (160 * pieces["blue"][i].y);
   }
 }
 
@@ -83,8 +83,8 @@ function setup_pieces() {
 function move_piece(piece, x, y) {
   piece.x = x;
   piece.y = y;
-  piece.shape.getChildByName("shape").x = 160 * x;
-  piece.shape.getChildByName("shape").y = 160 * y;
+  piece.shape.getChildByName("shape").x = (200) + 160 * x;
+  piece.shape.getChildByName("shape").y = (200) + 160 * y;
   stage.update();
 }
 

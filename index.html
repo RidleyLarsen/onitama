@@ -2,11 +2,20 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Onitama</title>
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+      }
+      #gameCanvas {
+        width: 100vw;
+      }
+    </style>
   </head>
   <body>
-    <canvas width="800" height="800" id="gameCanvas"/>
+    <canvas width="800" height="1200" id="gameCanvas"/>
     <script src="createjs.js"></script>
     <script src="draw.js"></script>
     <script src="game.js"></script>
@@ -18,6 +27,11 @@
       (function() {
         setTimeout(function () {
           setup_pieces();
+          setup_cards();
+          var canvas = document.getElementById("gameCanvas");
+          canvas.addEventListener("click", function (evt) {
+            console.log(evt);
+          });
         }, 1000);
       })()
     </script>

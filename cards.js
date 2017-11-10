@@ -4,34 +4,73 @@
       * Select 5 random cards at the beginning of the game.
       * Provide a function for each player to get their move set.
 */
+var game_cards = {
+    "red": [],
+    "blue": [],
+    "temp": {}
+};
 
-var cards = {
-  "tiger": [[0, -2], [0, 1]],
-  "crab": [[-2, 0], [0, -1], [2, 0]],
-  "monkey": [[-1, -1], [-1, 1], [1, -1], [1, 1]],
-  "crane": [[-1, 1], [1, 1], [0, 1]],
-  "dragon": [[-2, -1], [-1, 1], [1, 1], [2, -1]],
-  "elephant": [[-1, 0], [-1, -1], [1, 0], [1, 1]],
-  "mantis": [[-1, -1], [1, -1], [0, 1]],
-  "boar": [[-1, 0], [0, -1], [1, 0]],
-  "frog": [[-2, 0], [-1, -1], [1, 1]],
-  "goose": [[-1, -1], [-1, 0], [1, 0], [1, 1]],
-  "horse": [[-1, 0], [0, -1], [0, 1]],
-  "eel": [[-1, -1], [-1, 1], [1, 0]],
-  "rabbit": [[-1, 1], [1, -1], [2, 0]],
-  "rooster": [[-1, 0], [-1, 1], [1, 0], [1, 1]],
-  "ox": [[0, 1], [0, -1], [1, 0]],
-  "cobra": [[-1, 0], [1, 1], [1, -1]]
+var cards = [
+  {"shape": null, "name": "litten", "old_name": "tiger", "moves": [[0, -2], [0, 1]]},
+  {"shape": null, "name": "litten", "old_name": "crab", "moves": [[-2, 0], [0, -1], [2, 0]]},
+  {"shape": null, "name": "litten", "old_name": "monkey", "moves": [[-1, -1], [-1, 1], [1, -1], [1, 1]]},
+  {"shape": null, "name": "litten", "old_name": "crane", "moves": [[-1, 1], [1, 1], [0, 1]]},
+  {"shape": null, "name": "litten", "old_name": "dragon", "moves": [[-2, -1], [-1, 1], [1, 1], [2, -1]]},
+  {"shape": null, "name": "litten", "old_name": "elephant", "moves": [[-1, 0], [-1, -1], [1, 0], [1, 1]]},
+  {"shape": null, "name": "litten", "old_name": "mantis", "moves": [[-1, -1], [1, -1], [0, 1]]},
+  {"shape": null, "name": "litten", "old_name": "boar", "moves": [[-1, 0], [0, -1], [1, 0]]},
+  {"shape": null, "name": "litten", "old_name": "frog", "moves": [[-2, 0], [-1, -1], [1, 1]]},
+  {"shape": null, "name": "litten", "old_name": "goose", "moves": [[-1, -1], [-1, 0], [1, 0], [1, 1]]},
+  {"shape": null, "name": "litten", "old_name": "horse", "moves": [[-1, 0], [0, -1], [0, 1]]},
+  {"shape": null, "name": "litten", "old_name": "eel", "moves": [[-1, -1], [-1, 1], [1, 0]]},
+  {"shape": null, "name": "litten", "old_name": "rabbit", "moves": [[-1, 1], [1, -1], [2, 0]]},
+  {"shape": null, "name": "litten", "old_name": "rooster", "moves": [[-1, 0], [-1, 1], [1, 0], [1, 1]]},
+  {"shape": null, "name": "litten", "old_name": "ox", "moves": [[0, 1], [0, -1], [1, 0]]},
+  {"shape": null, "name": "litten", "old_name": "cobra", "moves": [[-1, 0], [1, 1], [1, -1]]},
+];
+
+/**
+ * Cribbed from stack overflow. https://stackoverflow.com/a/6274381
+ * Shuffles array in place.
+ * @param {Array} a items An array containing the items.
+ */
+function shuffle(a) {
+    var j, x, i;
+    for (i = a.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        x = a[i];
+        a[i] = a[j];
+        a[j] = x;
+    }
 }
 
-// function get_random_cards() {
-//     var chosen_cards = [];
-//     while (chosen_cards.length < 5) {
-//       var temp_cards = Object.assign({}, cards);
-//       temp_card_names = Object.keys(temp_cards);
-//       i = parseInt(Math.random() * temp_card_names.length);
-//       chosen_cards.push(cards[temp_card_names[i]])
-//       temp_cards
-//     }
-//
-// }
+function setup_cards() {
+  shuffle(cards)
+  for (var i = 0; i < 5; i++) {
+    cards[i].shape = new createjs.Container();
+    shape = new createjs.Shape();
+    shape.name = "shape";
+    cards[i].shape.addChild(shape);
+    // cards[i].shape.getChildByName("shape").graphics.setStrokeStyle(2).beginStroke("rgba(0, 0, 0, 0.5)").drawRect(0, 0, 400, 200);
+    text = new createjs.Text(cards[i].name, "Arial 40px", "#000000");
+    text.name = "text";
+    cards[i].shape.addChild(text);
+    stage.addChild(cards[i].shape);
+
+    grid = new createjs.Shape();
+    grid.graphics.beginBitmapFill(loader.getResult("litten")).drawRect(0, 0, 400, 200);
+    cards[i].shape.addChild(grid);
+  }
+  cards[0].shape.rotation = 180;
+  cards[0].shape.x = 800;
+  cards[0].shape.y = 200;
+  cards[1].shape.rotation = 180;
+  cards[1].shape.x = 400;
+  cards[1].shape.y = 200;
+  game_cards["blue"] = [cards[0], cards[1]];
+  game_cards["red"] = [cards[2], cards[3]];
+  cards[2].shape.y = 1000;
+  cards[3].shape.y = 1000;
+  cards[3].shape.x = 400;
+  cards[4].shape.y = 1200;
+}

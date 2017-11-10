@@ -15,6 +15,7 @@ function init() {
     {src: "red_king.png", id: "red_king"},
     {src: "blue_ball.png", id: "blue_pawn"},
     {src: "blue_king.png", id: "blue_king"},
+    {src: "litten.png", id: "litten"},
     // {src: "red_highlight.png", id: "red_highlight"},
     // {src: "blue_highlight.png", id: "blue_highlight"},
 	];
@@ -26,7 +27,8 @@ function init() {
 
 function handleComplete() {
 	board = new createjs.Shape();
-	board.graphics.beginBitmapFill(loader.getResult("board")).drawRect(0, 0, w, h);
+	board.graphics.beginBitmapFill(loader.getResult("board")).drawRect(0, 0, 800, 800);
+  board.y = 200;
 	//By default swapping between Stage for StageGL will not allow for vector drawing operation such as BitmapFill, useless you cache your shape.
 	// board.cache(0, 0, w, h);
 
