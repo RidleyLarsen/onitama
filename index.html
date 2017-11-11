@@ -45,7 +45,9 @@
   </head>
   <body>
     <button onclick="show_upcoming_card(true)" class="upside_down">View Upcoming Card</button>
+
     <p class="upside_down hidden blue">It's your turn!</p>
+    <button onclick="request_fullscreen()" class="upside_down">Fullscreen</button>
     <canvas width="800" height="1200" id="gameCanvas"></canvas>
 
     <script src="/onitama/createjs.js"></script>
@@ -58,6 +60,9 @@
     <button onclick="show_upcoming_card(false)">View Upcoming Card</button>
     <p class="red">It's your turn!</p>
     <script>
+      function request_fullscreen() {
+        document.body.webkitRequestFullscreen();
+      }
       (function() {
         setTimeout(function () {
           setup_pieces();
