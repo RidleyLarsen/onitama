@@ -101,6 +101,8 @@ function handle_click_highlight(evt) {
   capture_pieces(current_piece);
   remove_card_highlights();
   swap_cards();
+  check_win_by_king_move();
+  check_win_by_capture();
   switch_player();
 }
 
