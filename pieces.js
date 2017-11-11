@@ -86,9 +86,6 @@ function capture_pieces(piece) {
     if ((piece.x == pieces[player_colors[current_player * -1]][i].x) && (piece.y == pieces[player_colors[current_player * -1]][i].y)) {
       stage.removeChild(pieces[player_colors[current_player * -1]][i].shape)
       stage.update();
-      if (pieces[player_colors[current_player * -1]][i].type == "king") {
-        alert("u won");
-      }
       pieces[player_colors[current_player * -1]][i] = undefined;
     }
   }
