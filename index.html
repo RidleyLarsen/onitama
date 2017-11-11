@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Onitama</title>
     <style>
+      * {
+        transition: 200ms all;
+      }
       body {
         padding: 0;
         margin: 0;
@@ -12,10 +15,39 @@
       #gameCanvas {
         width: 100vw;
       }
+      button {
+        padding: 5px;
+        border: 1px solid #eaeaea;
+        border-radius: 5px;
+        box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+        background: white;
+        margin: 10px;
+      }
+      .upside_down {
+        transform: rotateZ(180deg);
+      }
+      p {
+        margin: 0;
+        display: inline-block;
+        padding: 7px;
+        background: rgba(0, 100, 250, 0.2);
+        border: 1px rgba(0, 100, 250, 1);
+        border-radius: 5px;
+        color: rgba(0, 100, 250, 1);
+        font-family: sans-serif;
+        font-weight: lighter;
+        font-size: 0.8em;
+      }
+      .hidden {
+        opacity: 0;
+      }
     </style>
   </head>
   <body>
-    <canvas width="800" height="1200" id="gameCanvas"/>
+    <button onclick="show_upcoming_card(true)" class="upside_down">View Upcoming Card</button>
+    <p class="upside_down hidden blue">It's your turn!</p>
+    <canvas width="800" height="1200" id="gameCanvas"></canvas>
+
     <script src="createjs.js"></script>
     <script src="draw.js"></script>
     <script src="game.js"></script>
@@ -23,6 +55,8 @@
     <script src="pieces.js"></script>
     <script src="cards.js"></script>
     <script src="game.js"></script>
+    <button onclick="show_upcoming_card(false)">View Upcoming Card</button>
+    <p class="red">It's your turn!</p>
     <script>
       (function() {
         setTimeout(function () {

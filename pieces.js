@@ -9,21 +9,22 @@
         can move to, then ask the board to highlight those spaces.
 
 */
+var current_piece = {};
 
 pieces = {
   "red": [
-    {sprite: "red_pawn", color: "rgba(255, 0, 0, 0.2)", "type": "pawn", "x": 0, "y": 4, shape: null},
-    {sprite: "red_pawn", color: "rgba(255, 0, 0, 0.2)", "type": "pawn", "x": 1, "y": 4, shape: null},
-    {sprite: "red_king", color: "rgba(255, 0, 0, 0.8)", "type": "king", "x": 2, "y": 4, shape: null},
-    {sprite: "red_pawn", color: "rgba(255, 0, 0, 0.2)", "type": "pawn", "x": 3, "y": 4, shape: null},
-    {sprite: "red_pawn", color: "rgba(255, 0, 0, 0.2)", "type": "pawn", "x": 4, "y": 4, shape: null}
+    {color: "red", sprite: "red_pawn", "type": "pawn", "x": 0, "y": 4, shape: null},
+    {color: "red", sprite: "red_pawn", "type": "pawn", "x": 1, "y": 4, shape: null},
+    {color: "red", sprite: "red_king", "type": "king", "x": 2, "y": 4, shape: null},
+    {color: "red", sprite: "red_pawn", "type": "pawn", "x": 3, "y": 4, shape: null},
+    {color: "red", sprite: "red_pawn", "type": "pawn", "x": 4, "y": 4, shape: null}
   ],
   "blue": [
-    {sprite: "blue_pawn", color: "rgba(0, 0, 255, 0.2)", "type": "pawn", "x": 0, "y": 0, shape: null},
-    {sprite: "blue_pawn", color: "rgba(0, 0, 255, 0.2)", "type": "pawn", "x": 1, "y": 0, shape: null},
-    {sprite: "blue_king", color: "rgba(0, 0, 255, 0.8)", "type": "king", "x": 2, "y": 0, shape: null},
-    {sprite: "blue_pawn", color: "rgba(0, 0, 255, 0.2)", "type": "pawn", "x": 3, "y": 0, shape: null},
-    {sprite: "blue_pawn", color: "rgba(0, 0, 255, 0.2)", "type": "pawn", "x": 4, "y": 0, shape: null}
+    {color: "blue", sprite: "blue_pawn", "type": "pawn", "x": 0, "y": 0, shape: null},
+    {color: "blue", sprite: "blue_pawn", "type": "pawn", "x": 1, "y": 0, shape: null},
+    {color: "blue", sprite: "blue_king", "type": "king", "x": 2, "y": 0, shape: null},
+    {color: "blue", sprite: "blue_pawn", "type": "pawn", "x": 3, "y": 0, shape: null},
+    {color: "blue", sprite: "blue_pawn", "type": "pawn", "x": 4, "y": 0, shape: null}
   ]
 }
 
@@ -32,8 +33,10 @@ function add_piece_shapes() {
     var sprite = loader.getResult(pieces["red"][i].sprite);
     pieces["red"][i].shape = new createjs.Container();
     shape = new createjs.Shape();
+    shape.piece = pieces["red"][i];
     shape.name = "shape";
     pieces["red"][i].shape.addChild(shape)
+    pieces["red"][i].shape.addEventListener("click", handle_click_piece);
     stage.addChild(pieces["red"][i].shape)
     pieces["red"][i].shape
       .getChildByName("shape")
@@ -52,8 +55,10 @@ function add_piece_shapes() {
     var sprite = loader.getResult(pieces["blue"][i].sprite);
     pieces["blue"][i].shape = new createjs.Container();
     shape = new createjs.Shape();
+    shape.piece = pieces["blue"][i];
     shape.name = "shape";
     pieces["blue"][i].shape.addChild(shape)
+    pieces["blue"][i].shape.addEventListener("click", handle_click_piece);
     stage.addChild(pieces["blue"][i].shape)
     pieces["blue"][i].shape
       .getChildByName("shape")
@@ -70,22 +75,46 @@ function add_piece_shapes() {
   }
 }
 
-function highlight_available_moves(card) {
-  for (var i = 0; i < cards[card].length; i++) {
-    highlightSquare(2 + cards[card][i][0], 2 + cards[card][i][1], "red");
-  }
-}
-
 function setup_pieces() {
   add_piece_shapes();
+}
+
+function handle_click_highlight(evt) {
+  console.log(evt.target);
+  console.log(current_piece.x, evt.target.board_x, evt.target.board_y);
+  move_piece(current_piece, evt.target.board_x, evt.target.board_y);
+
+  var temp_card = game_cards["temp"];
+  game_cards["temp"] = current_card;
+  game_cards["blue"] = [cards[0], cards[1]];
+  game_cards["red"] = [cards[2], cards[3]];
+  game_cards["temp"] = cards[4];
+}
+
+function handle_click_piece(evt) {
+  if (evt.target.piece.color !== player_colors[current_player]) {
+    return;
+  }
+  current_piece = evt.target.piece;
+  remove_highlights();
+  for (var i = 0; i < current_card.moves[player_colors[current_player]].length; i++) {
+    highlight = highlightSquare(
+        evt.target.piece.x + current_card.moves[player_colors[current_player]][i][0],
+        evt.target.piece.y + current_card.moves[player_colors[current_player]][i][1],
+        player_colors[current_player]
+    )
+    if (highlight !== undefined) {
+      highlight.addEventListener("click", handle_click_highlight)
+    }
+  }
 }
 
 function move_piece(piece, x, y) {
   piece.x = x;
   piece.y = y;
-  piece.shape.getChildByName("shape").x = (200) + 160 * x;
+  piece.shape.getChildByName("shape").x = 160 * x;
   piece.shape.getChildByName("shape").y = (200) + 160 * y;
   stage.update();
+  switch_player();
+  remove_highlights();
 }
-
-setup_pieces();
