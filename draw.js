@@ -39,7 +39,7 @@ function init() {
 
 	loader = new createjs.LoadQueue(false);
 	loader.addEventListener("complete", handleComplete);
-	loader.loadManifest(manifest, true, "./images/");
+	loader.loadManifest(manifest, true, "/onitama/images/");
 }
 
 function handleComplete() {
