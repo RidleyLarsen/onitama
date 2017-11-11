@@ -79,16 +79,29 @@ function setup_pieces() {
   add_piece_shapes();
 }
 
+function capture_pieces(piece) {
+  console.log("looking at", player_colors[current_player * -1], "'s pieces. piece passed was", piece)
+  for (var i = 0; i < pieces[player_colors[current_player * -1]].length; i++) {
+    if (pieces[player_colors[current_player * -1]][i] === undefined) { continue };
+    if ((piece.x == pieces[player_colors[current_player * -1]][i].x) && (piece.y == pieces[player_colors[current_player * -1]][i].y)) {
+      stage.removeChild(pieces[player_colors[current_player * -1]][i].shape)
+      stage.update();
+      if (pieces[player_colors[current_player * -1]][i].type == "king") {
+        alert("u won");
+      }
+      pieces[player_colors[current_player * -1]][i] = undefined;
+    }
+  }
+}
+
 function handle_click_highlight(evt) {
   console.log(evt.target);
   console.log(current_piece.x, evt.target.board_x, evt.target.board_y);
   move_piece(current_piece, evt.target.board_x, evt.target.board_y);
-
-  var temp_card = game_cards["temp"];
-  game_cards["temp"] = current_card;
-  game_cards["blue"] = [cards[0], cards[1]];
-  game_cards["red"] = [cards[2], cards[3]];
-  game_cards["temp"] = cards[4];
+  capture_pieces(current_piece);
+  remove_card_highlights();
+  swap_cards();
+  switch_player();
 }
 
 function handle_click_piece(evt) {
@@ -115,6 +128,5 @@ function move_piece(piece, x, y) {
   piece.shape.getChildByName("shape").x = 160 * x;
   piece.shape.getChildByName("shape").y = (200) + 160 * y;
   stage.update();
-  switch_player();
   remove_highlights();
 }

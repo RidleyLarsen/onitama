@@ -16,4 +16,16 @@ function switch_player() {
   document.querySelector("p." + player_colors[current_player * -1]).classList.add('hidden')
 }
 
+function check_win_by_capture() {
+  var has_king = false;
+  for (var i = 0; i < pieces[player_colors[current_player * -1]].length; i++) {
+    if (pieces[player_colors[current_player * -1]][i].type == "king") {
+      has_king = true;
+    }
+  }
+  if (!has_king) {
+    alert(player_names[player_colors[current_player]] + " wins!")
+  }
+}
+
 init();

@@ -25,6 +25,14 @@ function init() {
     {src: "mrmime.png", id: "mrmime"},
     {src: "eevee.png", id: "eevee"},
     {src: "abra.png", id: "abra"},
+    {src: "dodrio.png", id: "dodrio"},
+    {src: "exeggutor.png", id: "exeggutor"},
+    {src: "hitmonlee.png", id: "hitmonlee"},
+    {src: "haunter.png", id: "haunter"},
+    {src: "tauros.png", id: "tauros"},
+    {src: "gogoat.png", id: "gogoat"},
+
+
     // {src: "red_highlight.png", id: "red_highlight"},
     // {src: "blue_highlight.png", id: "blue_highlight"},
 	];

@@ -23,8 +23,18 @@ function highlightSquare(x, y, color) {
   if (color == "red") {
     color = "rgba(255, 100, 100, 0.5)"
     for (var i = 0; i < pieces["red"].length; i++) {
+      if (pieces["red"][i] === undefined) { continue; }
       if ((pieces["red"][i].x == x) && (pieces["red"][i].y == y)) {
         console.log(x, y, pieces["red"][i].x, pieces["red"][i].y)
+        return;
+      }
+    }
+  } else {
+    color = "rgba(100, 100, 255, 0.5)"
+    for (var i = 0; i < pieces["blue"].length; i++) {
+      if (pieces["blue"][i] === undefined) { continue; }
+      if ((pieces["blue"][i].x == x) && (pieces["blue"][i].y == y)) {
+        console.log(x, y, pieces["blue"][i].x, pieces["blue"][i].y)
         return;
       }
     }
@@ -40,6 +50,13 @@ function highlightSquare(x, y, color) {
   // highlight.graphics.beginBitmapFill(loader.getResult(color + "_highlight")).drawRect(SQUARE_WIDTH * w, SQUARE_HEIGHT * h, w, h);
   stage.addChild(highlight);
   return highlight;
+}
+
+function remove_card_highlights() {
+  while (stage.getChildByName("card_highlight") !== null) {
+    child = stage.getChildByName("card_highlight");
+    stage.removeChild(child);
+  }
 }
 
 function remove_highlights() {
